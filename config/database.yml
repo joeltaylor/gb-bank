@@ -1,0 +1,23 @@
+default: &default
+  adapter: postgresql
+  encoding: utf8
+  host: localhost
+  min_messages: warning
+  pool: 5
+  timeout: 5000
+
+test:
+  <<: *default
+  database: gbbank_test
+
+development:
+  <<: *default
+  database: gbbank_development
+
+staging:
+  <<: *default
+  database: gbbank_staging
+
+production:
+  <<: *default
+  database: gbbank_production
