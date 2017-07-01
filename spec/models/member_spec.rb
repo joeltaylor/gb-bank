@@ -24,4 +24,8 @@ RSpec.describe Member, type: :model do
     expect(member).to_not be_valid
     expect { member.save(validate: false) }.to raise_error(ActiveRecord::RecordNotUnique)
   end
+
+  it "has one account" do
+    expect(member).to have_one(:account)
+  end
 end
