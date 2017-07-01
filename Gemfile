@@ -30,6 +30,7 @@ group :development do
   gem "better_errors"
   gem "web-console", "~> 2.0"
   gem "spring"
+  gem 'guard-rspec', '~> 4.7.3'
 end
 
 group :test do
