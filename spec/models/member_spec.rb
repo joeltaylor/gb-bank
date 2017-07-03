@@ -32,6 +32,20 @@ RSpec.describe Member, type: :model do
     end
   end
 
+  describe "before_save" do
+    it "downcases an email before creating a new member" do
+      member.email = "SOMEONE@eMaIl.CoM"
+      member.save
+      expect(member.email).to eq("someone@email.com")
+    end
+
+    it "downcases email when updated" do
+      member.save
+      member.update(email: "NEW@email.com")
+      expect(member.email).to eq("new@email.com")
+    end
+  end
+
   describe "associations" do
     it "has one account" do
       expect(member).to have_one(:account)
