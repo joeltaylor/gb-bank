@@ -14,3 +14,4 @@ en:
     create:
       heading: New Member
       success: Successfully created Member
+      failure: Something when wrong creating the Member

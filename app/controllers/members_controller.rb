@@ -23,10 +23,10 @@ class MembersController < ApplicationController
 
   def create
     member = Member.new(member_params)
-    if member.save 
+    if ::MemberSetupService.new(member: member, credit: 100.00).commit
       redirect_to members_path, notice: t('member.create.success')
     else
-      redirect_to members_path, notice: t('member.edit.failure')
+      redirect_to members_path, notice: t('member.create.failure')
     end
   end
 
