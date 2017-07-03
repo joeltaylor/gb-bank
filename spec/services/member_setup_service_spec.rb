@@ -15,6 +15,8 @@ RSpec.describe MemberSetupService do
     transaction = member.account.transactions.last
 
     expect(transaction.amount).to eq(100.00)
+    expect(transaction.description).to match("Promotion")
+    expect(transaction.date).not_to be_nil
   end
 
   it "applies the promotional transaction to the member's account" do
