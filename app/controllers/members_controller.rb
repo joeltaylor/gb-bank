@@ -1,7 +1,7 @@
 class MembersController < ApplicationController
 
   def index
-    @members = Member.all || []
+    @members = Member.includes(:account).all
   end
 
   def new

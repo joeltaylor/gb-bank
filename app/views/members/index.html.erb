@@ -4,8 +4,7 @@
   <tr>
     <th> Name </th>
     <th> Email </th>
-    <th></th>
-    <th></th>
+    <th> Balance </th>
     <th></th>
   </tr>
 
@@ -13,6 +12,7 @@
     <tr>
       <td><%= member.name %></td>
       <td><%= member.email %></td>
+      <td><%= number_to_currency(member.account.balance) %></td>
       <td><%= link_to t("member.index.edit"), edit_member_path(member)%></td>
     </tr>
   <% end %>

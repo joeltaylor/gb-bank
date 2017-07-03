@@ -17,11 +17,12 @@ RSpec.describe "members/index.html.erb", type: :view do
   it "displays the table headers" do
     expect(page.find("table")).to have_content("Name")
     expect(page.find("table")).to have_content("Email")
+    expect(page.find("table")).to have_content("Balance")
   end
 
   context "with members" do
     before(:each) do
-      @members = FactoryGirl.build_stubbed_list(:member, 3 )
+      @members = FactoryGirl.build_stubbed_list(:member_with_account, 3 )
       assign(:members, @members)
       render
     end
@@ -30,6 +31,7 @@ RSpec.describe "members/index.html.erb", type: :view do
       @members.each do |member|
         expect(page).to have_content(member.name)
         expect(page).to have_content(member.email)
+        expect(page).to have_content(member.account.balance)
       end
     end
 

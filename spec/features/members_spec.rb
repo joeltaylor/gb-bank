@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature "Members", type: :feature do
   feature "User updates a member" do
-    let(:member) { FactoryGirl.create(:member, name: "person", email: "person@person.com") }
+    let(:member) { FactoryGirl.create(:member_with_account, name: "person", email: "person@person.com") }
 
     scenario "Successfully" do
       visit edit_member_path(member)
@@ -17,7 +17,7 @@ RSpec.feature "Members", type: :feature do
     end
 
     scenario "With a duplicate email" do
-      FactoryGirl.create(:member, email: 'previous@email.com')
+      FactoryGirl.create(:member_with_account, email: 'previous@email.com')
 
       visit edit_member_path(member)
       fill_in "member_email", with: "previous@email.com"
@@ -90,7 +90,7 @@ RSpec.feature "Members", type: :feature do
     end
 
     scenario "With a duplicate email" do
-      FactoryGirl.create(:member, email: 'previous@email.com')
+      FactoryGirl.create(:member_with_account, email: 'previous@email.com')
 
       visit members_path
       click_link(t('member.index.new'))
