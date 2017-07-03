@@ -2,3 +2,15 @@ en:
   home:
     index:
       heading: Welcome to GB Bank!
+  member:
+    index:
+      heading: All Members
+      edit: Edit
+      new: New Member
+    edit:
+      heading: Edit Member
+      success: Successfully updated Member
+      failure: Something when wrong updating the Member
+    create:
+      heading: New Member
+      success: Successfully created Member

@@ -1,0 +1,22 @@
+<h2><%= t("member.index.heading") %></h2>
+
+<table>
+  <tr>
+    <th> Name </th>
+    <th> Email </th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+  <% @members.each do |member| %>
+    <tr>
+      <td><%= member.name %></td>
+      <td><%= member.email %></td>
+      <td><%= link_to t("member.index.edit"), edit_member_path(member)%></td>
+    </tr>
+  <% end %>
+</table>
+
+<br>
+<%= link_to t("member.index.new"), new_member_path %>

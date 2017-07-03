@@ -1,0 +1,13 @@
+<%= form_for @member do |f| %>
+  <div>
+    <%= f.label :name %><br>
+    <%= f.text_field :name, required: true %>
+  </div>
+  <div>
+    <%= f.label :email %><br>
+    <%= f.email_field :email, required: true %>
+  </div>
+  <div>
+    <%= f.submit %>
+  </div>
+<% end %>

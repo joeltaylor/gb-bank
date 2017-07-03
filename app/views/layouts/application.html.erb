@@ -18,6 +18,10 @@
 </head>
 <body id="<%= page_specific_css_id %>">
 
+<% if flash[:notice] %>
+  <h3><%= flash[:notice] %></h3>
+<% end %>
+
 <%= yield %>
 
 </body>

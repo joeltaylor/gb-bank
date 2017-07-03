@@ -31,6 +31,7 @@ RSpec.configure do |config|
 
   config.include FactoryGirl::Syntax::Methods
   config.include FeatureHelpers, type: :feature
+  config.include AbstractController::Translation, type: :feature
   config.include ViewHelpers, type: :view
 
   config.before(:each, js: true) do
@@ -40,11 +41,11 @@ RSpec.configure do |config|
   end
 
   config.before(:each, type: :feature) do
-    resize_window_default
+    # resize_window_default
   end
 
   config.before(:each, :mobile, type: :feature) do
-    resize_window_to_mobile
+    # resize_window_to_mobile
 
     # rack-test has no concept of a window so need to use :webkit for mobile
     # responsive tests

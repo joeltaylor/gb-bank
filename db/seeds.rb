@@ -1,7 +1,9 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+require 'faker'
+
+puts "Removing previous seed data"
+Member.destroy_all
+puts "Previos seed data removed"
+
+puts "Creating members"
+FactoryGirl.create_list(:member, 10)
+puts "Created members"
