@@ -42,4 +42,5 @@ group :test do
   gem "rake", "~> 10.5"
   gem "rspec-rails", "~> 3.5", ">= 3.5.2"
   gem "shoulda-matchers", "~> 2.8", require: false
+  gem "faker", "~> 1.7.3"
 end
