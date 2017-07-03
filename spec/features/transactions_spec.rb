@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature "Transactions", type: :feature do
   let(:member)   { FactoryGirl.create(:member) }
-  let!(:account)  { FactoryGirl.create(:account, member: member, balance: 50.00) }
+  let!(:account)  { FactoryGirl.create(:account, member: member, balance: 50.00, created_at: 3.days.ago) }
 
   feature "User creates a transaction for a member" do
     before do
@@ -10,7 +10,7 @@ RSpec.feature "Transactions", type: :feature do
       click_link(t('member.index.create_transaction'))
       fill_in "member_email", with: member.email
       fill_in "transaction_amount", with: 100.00
-      fill_in "transaction_date", with: Date.today
+      fill_in "transaction_date", with: 1.day.ago
       fill_in "transaction_description", with: "Gift"
     end
 

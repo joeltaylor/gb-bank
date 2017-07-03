@@ -4,7 +4,7 @@ FactoryGirl.define do
     email { Faker::Internet.unique.email}
 
     factory :member_with_account do
-      account
+      association :account, factory: :account_created_yesterday
     end
   end
 end

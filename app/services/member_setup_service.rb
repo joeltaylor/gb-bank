@@ -29,7 +29,7 @@ class MemberSetupService
       Transaction.create!( amount: credit,
                            account: @account,
                            description: "Promotional sign-on bonus",
-                           date: DateTime.now.utc
+                           date: Time.current
                          )
     end
   end
