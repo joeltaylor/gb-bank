@@ -1,13 +1,13 @@
 <%= form_for @member do |f| %>
-  <div>
+  <div class="form-group">
     <%= f.label :name %><br>
-    <%= f.text_field :name, required: true %>
+    <%= f.text_field :name, required: true, class: 'form-control' %>
   </div>
-  <div>
+  <div class="form-group">
     <%= f.label :email %><br>
-    <%= f.email_field :email, required: true %>
+    <%= f.email_field :email, required: true, class: 'form-control' %>
   </div>
   <div>
-    <%= f.submit %>
+    <%= f.submit class: "btn btn-default"%>
   </div>
 <% end %>

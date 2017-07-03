@@ -42,6 +42,11 @@ RSpec.describe Transaction, type: :model do
       transaction.description = "abc"*140
       expect(transaction).to_not be_valid
     end
+
+    it "stores amounts with a precision of 2" do
+      transaction.amount = 10.9555
+      expect(transaction.amount).to eq(10.96)
+    end
   end
 
   describe "associations" do

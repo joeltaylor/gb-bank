@@ -1,4 +1,6 @@
 en:
+  error:
+    generic_failure: Something went wrong
   home:
     index:
       heading: Welcome to GB Bank!
@@ -7,11 +9,17 @@ en:
       heading: All Members
       edit: Edit
       new: New Member
+      create_transaction: New Transaction
     edit:
       heading: Edit Member
       success: Successfully updated Member
-      failure: Something when wrong updating the Member
+      failure: Something went wrong updating the Member
     create:
       heading: New Member
       success: Successfully created Member
-      failure: Something when wrong creating the Member
+      failure: Something went wrong creating the Member
+  transaction:
+    create:
+      heading: New Transaction
+      success: Successfully created Transaction
+      failure: Something went wrong creating the transaction

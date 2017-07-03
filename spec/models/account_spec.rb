@@ -13,10 +13,14 @@ RSpec.describe Account, type: :model do
     expect { account.save(validate: false) }.to raise_error(ActiveRecord::RangeError)
   end
 
-  it "is invalid with an balance less than -999_999.99" do
-    account.balance = -1_000_000.00
+  it "is invalid with an balance less than -150.00" do
+    account.balance = -150.01
     expect(account).to_not be_valid
-    expect { account.save(validate: false) }.to raise_error(ActiveRecord::RangeError)
+  end
+
+  it "stores balance with a precision of 2" do
+    account.balance = 10.9555
+    expect(account.balance).to eq(10.96)
   end
 
   it "belongs to a member" do

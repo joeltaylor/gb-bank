@@ -14,6 +14,10 @@ RSpec.describe "members/index.html.erb", type: :view do
     expect(page).to have_content(t("member.index.new"))
   end
 
+  it "displays a link to create a new transaction" do
+    expect(page).to have_content(t("member.index.create_transaction"))
+  end
+
   it "displays the table headers" do
     expect(page.find("table")).to have_content("Name")
     expect(page.find("table")).to have_content("Email")

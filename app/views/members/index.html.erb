@@ -1,22 +1,25 @@
-<h2><%= t("member.index.heading") %></h2>
+<div class="row">
+  <h2><%= t("member.index.heading") %></h2>
 
-<table>
-  <tr>
-    <th> Name </th>
-    <th> Email </th>
-    <th> Balance </th>
-    <th></th>
-  </tr>
-
-  <% @members.each do |member| %>
+  <table class="table">
     <tr>
-      <td><%= member.name %></td>
-      <td><%= member.email %></td>
-      <td><%= number_to_currency(member.account.balance) %></td>
-      <td><%= link_to t("member.index.edit"), edit_member_path(member)%></td>
+      <th> Name </th>
+      <th> Email </th>
+      <th> Balance </th>
+      <th></th>
     </tr>
-  <% end %>
-</table>
 
-<br>
-<%= link_to t("member.index.new"), new_member_path %>
+    <% @members.each do |member| %>
+      <tr>
+        <td><%= member.name %></td>
+        <td><%= member.email %></td>
+        <td><%= number_to_currency(member.account.balance) %></td>
+        <td><%= link_to t("member.index.edit"), edit_member_path(member)%></td>
+      </tr>
+    <% end %>
+  </table>
+
+  <br>
+  <%= link_to t("member.index.new"), new_member_path, class: "btn btn-lg btn-default" %>
+  <%= link_to t("member.index.create_transaction"), new_transaction_path, class: "btn btn-lg btn-default" %>
+</div>

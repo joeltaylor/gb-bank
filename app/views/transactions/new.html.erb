@@ -1,0 +1,26 @@
+<h2><%= t("transaction.create.heading") %></h2>
+
+<%= form_for @transaction do |f| %>
+  <div class="form-group">
+    <%= f.label :email %><br>
+    <%= email_field :member, :email, required: true, class:'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :amount %><br>
+    <div class="input-group">
+      <div class="input-group-addon">$</div>
+      <%= f.text_field :amount, value: number_with_precision(0.00, precision: 2), class: 'form-control', required: true %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :date %><br>
+    <%= f.date_field :date, required: true, class:'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :description %><br>
+    <%= f.text_field :description, required: true, class:'form-control', maxlength: 140 %>
+  </div>
+  <div>
+    <%= f.submit %>
+  </div>
+<% end %>
