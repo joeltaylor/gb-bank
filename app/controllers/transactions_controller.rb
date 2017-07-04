@@ -5,10 +5,13 @@ class TransactionsController < ApplicationController
 
   def create
     transaction = Transaction.new(transaction_params)
-    if ::ProcessTransactionService.new(transaction: transaction, member: member).commit
+    service     =  ::ProcessTransactionService.new(transaction: transaction,
+                                                   member: member).commit
+    if service.errors.empty?
       redirect_to members_path, notice: t('transaction.create.success')
     else
       flash[:error] = t('error.generic_failure')
+      flash[:error_messages] = transaction.errors.full_messages + service.errors
       redirect_to members_path
     end
   end

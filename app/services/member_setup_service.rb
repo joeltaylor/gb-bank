@@ -1,9 +1,10 @@
 class MemberSetupService
-    attr_reader :member, :credit
+    attr_reader :member, :credit, :errors
 
     def initialize(member:, credit: 0.00)
       @member = member
       @credit = credit
+      @errors = []
     end
 
     def commit
@@ -13,10 +14,12 @@ class MemberSetupService
           initialize_account
           create_account_promotion
         rescue StandardError => e
-          raise ActiveRecord::Rollback
           Rails.logger.info("MemberSetupService Error: #{e}")
+          @errors << e.to_s
+          raise ActiveRecord::Rollback
         end
       end
+      self
     end
 
     private

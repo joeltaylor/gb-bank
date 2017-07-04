@@ -54,6 +54,7 @@ RSpec.describe MembersController, type: :controller do
 
         expect(@member.reload.email).not_to eq("lala")
         expect(flash[:error]).to be_present
+        expect(flash[:error_messages]).to be_present
         expect(response).to redirect_to members_path
       end
     end
@@ -79,6 +80,7 @@ RSpec.describe MembersController, type: :controller do
 
         expect(Member.count).to eq(0)
         expect(flash[:error]).to be_present
+        expect(flash[:error_messages]).to be_present
         expect(response).to redirect_to members_path
       end
     end

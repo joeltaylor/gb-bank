@@ -42,6 +42,7 @@ RSpec.describe TransactionsController, type: :controller do
 
         expect(Transaction.count).to eq(0)
         expect(flash[:error]).to be_present
+        expect(flash[:error_messages]).to be_present
         expect(response).to redirect_to members_path
       end
     end

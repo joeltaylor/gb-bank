@@ -23,8 +23,12 @@ RSpec.describe ProcessTransactionService do
   context "without an account" do
     let(:member) { FactoryGirl.create(:member) }
 
-    it "returns false" do
-      expect(process_transaction).to eq(false)
+    it "cancels the transaction" do
+      expect(Transaction.count).to eq(0)
+    end
+
+    it "adds a missing account error" do
+      expect(process_transaction.errors[0]).to match("Missing account")
     end
   end
 end
