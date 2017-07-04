@@ -17,7 +17,8 @@ class MembersController < ApplicationController
     if @member.update(member_params)
       redirect_to members_path, notice: t('member.edit.success')
     else
-      redirect_to members_path, notice: t('member.edit.failure')
+      flash[:error] = t('error.generic_failure')
+      redirect_to members_path
     end
   end
 
@@ -26,7 +27,8 @@ class MembersController < ApplicationController
     if ::MemberSetupService.new(member: member, credit: 100.00).commit
       redirect_to members_path, notice: t('member.create.success')
     else
-      redirect_to members_path, notice: t('member.create.failure')
+      flash[:error] = t('error.generic_failure')
+      redirect_to members_path
     end
   end
 

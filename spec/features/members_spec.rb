@@ -24,7 +24,7 @@ RSpec.feature "Members", type: :feature do
       click_button(t('helpers.submit.update', model: 'Member'))
 
       expect(page).to have_content(t('member.index.heading'))
-      expect(page).to have_content(t('member.edit.failure'))
+      expect(page).to have_content(t('error.generic_failure'))
       expect(page).to have_content("person@person.com")
     end
 
@@ -34,7 +34,7 @@ RSpec.feature "Members", type: :feature do
       click_button(t('helpers.submit.update', model: 'Member'))
 
       expect(page).to have_content(t('member.index.heading'))
-      expect(page).to have_content(t('member.edit.failure'))
+      expect(page).to have_content(t('error.generic_failure'))
     end
 
     scenario "Without a name" do
@@ -43,7 +43,7 @@ RSpec.feature "Members", type: :feature do
       click_button(t('helpers.submit.update', model: 'Member'))
 
       expect(page).to have_content(t('member.index.heading'))
-      expect(page).to have_content(t('member.edit.failure'))
+      expect(page).to have_content(t('error.generic_failure'))
     end
   end
 
@@ -74,7 +74,7 @@ RSpec.feature "Members", type: :feature do
 
       expect(Member.count).to eq(0)
       expect(page).to have_content(t('member.index.heading'))
-      expect(page).to have_content(t('member.create.failure'))
+      expect(page).to have_content(t('error.generic_failure'))
     end
 
     scenario "Without an email" do
@@ -86,7 +86,7 @@ RSpec.feature "Members", type: :feature do
 
       expect(Member.count).to eq(0)
       expect(page).to have_content(t('member.index.heading'))
-      expect(page).to have_content(t('member.create.failure'))
+      expect(page).to have_content(t('error.generic_failure'))
     end
 
     scenario "With a duplicate email" do
@@ -101,7 +101,7 @@ RSpec.feature "Members", type: :feature do
 
       expect(page).not_to have_content("Member One")
       expect(page).to have_content(t('member.index.heading'))
-      expect(page).to have_content(t('member.create.failure'))
+      expect(page).to have_content(t('error.generic_failure'))
     end
   end
 end
