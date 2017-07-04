@@ -13,6 +13,7 @@ class ProcessTransactionService
 
     Account.transaction do
       begin
+        associate_transaction_with_account
         transaction.save!
         member.account.lock!
         apply_transaction_amount_to_account_balance
@@ -25,6 +26,10 @@ class ProcessTransactionService
   end
 
   private
+
+  def associate_transaction_with_account
+    transaction.account = account
+  end
 
   def apply_transaction_amount_to_account_balance
     account.balance += transaction.amount
