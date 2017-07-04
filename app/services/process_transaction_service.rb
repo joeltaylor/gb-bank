@@ -19,6 +19,7 @@ class ProcessTransactionService
         account.save!
       rescue StandardError => e
         raise ActiveRecord::Rollback
+        Rails.logger.info("ProcessTransactionService Error: #{e}")
       end
     end
   end

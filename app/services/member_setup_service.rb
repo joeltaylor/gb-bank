@@ -14,6 +14,7 @@ class MemberSetupService
           create_account_promotion
         rescue StandardError => e
           raise ActiveRecord::Rollback
+          Rails.logger.info("MemberSetupService Error: #{e}")
         end
       end
     end
