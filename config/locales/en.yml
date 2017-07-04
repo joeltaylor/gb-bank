@@ -4,6 +4,7 @@ en:
   home:
     index:
       heading: Welcome to GB Bank!
+      members: View Members
   member:
     index:
       heading: All Members
