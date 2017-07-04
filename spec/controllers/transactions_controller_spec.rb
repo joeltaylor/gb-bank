@@ -1,6 +1,21 @@
 require 'rails_helper'
 
 RSpec.describe TransactionsController, type: :controller do
+  describe "#new" do
+
+    it "renders the transactions/new template" do
+      get :new
+      expect(response).to render_template("transactions/new")
+    end
+
+    it "responds successfully" do
+      get :new
+
+      expect(response).to be_success
+      expect(assigns(:transaction)).to be_a_new(Transaction)
+    end
+  end
+
   describe "#create" do
     let(:member) {FactoryGirl.create(:member_with_account) }
 

@@ -35,7 +35,7 @@ RSpec.describe "members/index.html.erb", type: :view do
       @members.each do |member|
         expect(page).to have_content(member.name)
         expect(page).to have_content(member.email)
-        expect(page).to have_content(member.account.balance)
+        expect(page).to have_content(number_to_currency(member.account.balance))
       end
     end
 
