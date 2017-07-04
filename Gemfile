@@ -14,6 +14,10 @@ gem "turbolinks", "~> 5.0.0"
 gem "jbuilder", "~> 2.0"
 gem "sdoc", "~> 0.4.0", group: :doc
 
+# Used for seeds
+gem "faker", "~> 1.7.3"
+gem "factory_girl_rails", "~> 4.8"
+
 #
 # Back End
 #
@@ -23,7 +27,6 @@ gem "pg", "~> 0.18.4"
 
 group :development, :test do
   gem "pry-rails"
-  gem "factory_girl_rails", "~> 4.8"
 end
 
 group :development do
@@ -42,5 +45,4 @@ group :test do
   gem "rake", "~> 10.5"
   gem "rspec-rails", "~> 3.5", ">= 3.5.2"
   gem "shoulda-matchers", "~> 2.8", require: false
-  gem "faker", "~> 1.7.3"
 end
