@@ -12,7 +12,7 @@ class Transaction < ApplicationRecord
 
   def date_cannot_be_before_account_creation
     return false unless date && account
-    if date < account.created_at
+    if date.end_of_day < account.created_at.beginning_of_day
       errors.add(:date, "can't be before account was created")
     end
   end
