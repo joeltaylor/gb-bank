@@ -31,7 +31,7 @@ class MembersController < ApplicationController
       redirect_to members_path, notice: t('member.create.success')
     else
       flash[:error] = t('error.generic_failure')
-      flash[:error_messages] = member.errors.full_messages + service.errors
+      flash[:error_messages] = service.errors
       redirect_to members_path
     end
   end
