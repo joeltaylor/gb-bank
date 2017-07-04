@@ -2,59 +2,68 @@ require 'rails_helper'
 
 RSpec.feature "Members", type: :feature do
   feature "User updates a member" do
-    let(:member) { FactoryGirl.create(:member_with_account, name: "person", email: "person@person.com") }
+    let(:original_email) { "person@person.com" }
+    let(:original_name)  { "person" }
+    let(:new_email)      { "betterperson@person.com" }
+    let(:new_name)       { "better person" }
+    let(:member)         { FactoryGirl.create(:member_with_account,
+                                              name: original_name,
+                                              email: original_email)}
 
-    scenario "Successfully" do
+    before do
       visit edit_member_path(member)
-      fill_in "member_name", with: "New Name"
-      fill_in "member_email", with: "new@email.com"
+      fill_in "member_name", with: new_name
+      fill_in "member_email", with: new_email
+    end
+
+    scenario "With valid data" do
       click_button(t('helpers.submit.update', model: 'Member'))
 
       expect(page).to have_content(t('member.index.heading'))
       expect(page).to have_content(t('member.edit.success'))
-      expect(page).to have_content("New Name")
-      expect(page).to have_content("new@email.com")
+      expect(page).to have_content(new_name)
+      expect(page).to have_content(new_email)
     end
 
-    scenario "With a duplicate email" do
-      FactoryGirl.create(:member_with_account, email: 'previous@email.com')
+    scenario "With a new e-mail that's been taken" do
+      FactoryGirl.create(:member_with_account, email: new_email)
 
-      visit edit_member_path(member)
-      fill_in "member_email", with: "previous@email.com"
       click_button(t('helpers.submit.update', model: 'Member'))
 
-      expect(page).to have_content(t('member.index.heading'))
-      expect(page).to have_content(t('error.generic_failure'))
-      expect(page).to have_content("person@person.com")
+      expect(member.reload.email).to eq(original_email)
+      returns_to_members_index_with_an_error
     end
 
     scenario "With an invalid email" do
-      visit edit_member_path(member)
       fill_in "member_email", with: "not-a-email"
+
       click_button(t('helpers.submit.update', model: 'Member'))
 
-      expect(page).to have_content(t('member.index.heading'))
-      expect(page).to have_content(t('error.generic_failure'))
+      expect(member.reload.email).to eq(original_email)
+      returns_to_members_index_with_an_error
     end
 
     scenario "Without a name" do
-      visit edit_member_path(member)
       fill_in "member_name", with: ""
+
       click_button(t('helpers.submit.update', model: 'Member'))
 
-      expect(page).to have_content(t('member.index.heading'))
-      expect(page).to have_content(t('error.generic_failure'))
+      expect(member.reload.name).to eq(original_name)
+      returns_to_members_index_with_an_error
     end
   end
 
-  feature "Creating a new member" do
-    scenario "Successfully" do
+  feature "User creates a new member" do
+    before do
       visit members_path
       click_link(t('member.index.new'))
 
+      fill_in "member_name", with: "Member One"
+      fill_in "member_email", with: "member@one.com"
+    end
+
+    scenario "With valid data" do
       expect {
-        fill_in "member_name", with: "Member One"
-        fill_in "member_email", with: "member@one.com"
         click_button(t('helpers.submit.create', model: 'Member'))
       }.to change(Member.all, :count).by(1)
 
@@ -66,42 +75,35 @@ RSpec.feature "Members", type: :feature do
     end
 
     scenario "Without a name" do
-      visit members_path
-      click_link(t('member.index.new'))
+      fill_in "member_name", with: ""
 
-      fill_in "member_email", with: "member@one.com"
       click_button(t('helpers.submit.create', model: 'Member'))
 
       expect(Member.count).to eq(0)
-      expect(page).to have_content(t('member.index.heading'))
-      expect(page).to have_content(t('error.generic_failure'))
+      returns_to_members_index_with_an_error
     end
 
     scenario "Without an email" do
-      visit members_path
-      click_link(t('member.index.new'))
+      fill_in "member_email", with: ""
 
-      fill_in "member_name", with: "Member One"
       click_button(t('helpers.submit.create', model: 'Member'))
 
       expect(Member.count).to eq(0)
-      expect(page).to have_content(t('member.index.heading'))
-      expect(page).to have_content(t('error.generic_failure'))
+      returns_to_members_index_with_an_error
     end
 
     scenario "With a duplicate email" do
-      FactoryGirl.create(:member_with_account, email: 'previous@email.com')
+      FactoryGirl.create(:member_with_account, email: 'member@one.com')
 
-      visit members_path
-      click_link(t('member.index.new'))
-
-      fill_in "member_name", with: "Member One"
-      fill_in "member_email", with: "previous@email.com"
       click_button(t('helpers.submit.create', model: 'Member'))
 
-      expect(page).not_to have_content("Member One")
-      expect(page).to have_content(t('member.index.heading'))
-      expect(page).to have_content(t('error.generic_failure'))
+      expect(Member.count).to eq(1)
+      returns_to_members_index_with_an_error
     end
+  end
+
+  def returns_to_members_index_with_an_error
+    expect(page).to have_content(t('member.index.heading'))
+    expect(page).to have_content(t('error.generic_failure'))
   end
 end

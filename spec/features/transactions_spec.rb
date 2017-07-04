@@ -17,7 +17,8 @@ RSpec.feature "Transactions", type: :feature do
     scenario "With valid data and a positive amount" do
       click_button(t('helpers.submit.create', model: 'Transaction'))
 
-      behaves_like_a_successful_deposit_transaction
+      balance_is_increased_by_deposit
+      redirects_to_members_index_with_success
     end
 
     scenario "With valid data and a negative amount" do
@@ -25,7 +26,8 @@ RSpec.feature "Transactions", type: :feature do
 
       click_button(t('helpers.submit.create', model: 'Transaction'))
 
-      behaves_like_a_successful_charge_transaction
+      balance_is_decreased_by_charge
+      redirects_to_members_index_with_success
     end
 
     scenario "With a charge that would cause an overdrawn account balance" do
@@ -33,15 +35,17 @@ RSpec.feature "Transactions", type: :feature do
 
       click_button(t('helpers.submit.create', model: 'Transaction'))
 
-      behaves_like_a_failed_transaction
+      balance_does_not_change
+      redirects_to_members_index_with_an_error
     end
 
-    scenario "With an amount that would cause the balance to go outside support range" do
+    scenario "With an amount that would cause the balance to go outside supported range" do
       fill_in "transaction_amount", with: 10**10
 
       click_button(t('helpers.submit.create', model: 'Transaction'))
 
-      behaves_like_a_failed_transaction
+      balance_does_not_change
+      redirects_to_members_index_with_an_error
     end
 
     scenario "With a valid member e-mail that is capitalized" do
@@ -49,7 +53,8 @@ RSpec.feature "Transactions", type: :feature do
 
       click_button(t('helpers.submit.create', model: 'Transaction'))
 
-      behaves_like_a_successful_deposit_transaction
+      balance_is_increased_by_deposit
+      redirects_to_members_index_with_success
     end
 
     scenario "With a non-existent member e-mail" do
@@ -57,7 +62,8 @@ RSpec.feature "Transactions", type: :feature do
 
       click_button(t('helpers.submit.create', model: 'Transaction'))
 
-      behaves_like_a_failed_transaction
+      balance_does_not_change
+      redirects_to_members_index_with_an_error
     end
 
     scenario "Without a description" do
@@ -65,7 +71,8 @@ RSpec.feature "Transactions", type: :feature do
 
       click_button(t('helpers.submit.create', model: 'Transaction'))
 
-      behaves_like_a_failed_transaction
+      balance_does_not_change
+      redirects_to_members_index_with_an_error
     end
 
     scenario "With a description longer than 140 chars" do
@@ -74,7 +81,8 @@ RSpec.feature "Transactions", type: :feature do
       click_button(t('helpers.submit.create', model: 'Transaction'))
 
       expect(Transaction.last.description).to eq("a"*140)
-      behaves_like_a_successful_deposit_transaction
+      balance_is_increased_by_deposit
+      redirects_to_members_index_with_success
     end
 
     scenario "With an invalid date" do
@@ -82,7 +90,8 @@ RSpec.feature "Transactions", type: :feature do
 
       click_button(t('helpers.submit.create', model: 'Transaction'))
 
-      behaves_like_a_failed_transaction
+      balance_does_not_change
+      redirects_to_members_index_with_an_error
     end
 
     scenario "Without a date" do
@@ -90,25 +99,35 @@ RSpec.feature "Transactions", type: :feature do
 
       click_button(t('helpers.submit.create', model: 'Transaction'))
 
-      behaves_like_a_failed_transaction
+      balance_does_not_change
+      redirects_to_members_index_with_an_error
     end
 
+    scenario "With a date before the account was created" do
+      fill_in "transaction_date", with: account.created_at - 1.day
+
+      click_button(t('helpers.submit.create', model: 'Transaction'))
+
+      balance_does_not_change
+      redirects_to_members_index_with_an_error
+    end
+
+    scenario "With a date in the future" do
+      fill_in "transaction_date", with: 3.days.from_now
+
+      click_button(t('helpers.submit.create', model: 'Transaction'))
+
+      balance_does_not_change
+      redirects_to_members_index_with_an_error
+    end
   end
 
-  def behaves_like_a_successful_deposit_transaction
-    balance_is_increased_by_deposit
+  def redirects_to_members_index_with_success
     expect(page).to have_content(t('member.index.heading'))
     expect(page).to have_content(t('transaction.create.success'))
   end
 
-  def behaves_like_a_successful_charge_transaction
-    balance_is_decreased_by_charge
-    expect(page).to have_content(t('member.index.heading'))
-    expect(page).to have_content(t('transaction.create.success'))
-  end
-
-  def behaves_like_a_failed_transaction
-    balance_does_not_change
+  def redirects_to_members_index_with_an_error
     expect(page).to have_content(t('member.index.heading'))
     expect(page).to have_content(t('error.generic_failure'))
   end
