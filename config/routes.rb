@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   root to: "home#index"
 
+   get 'members/create', to: "members#new"
+   get 'transactions/create', to: "transactions#new"
+
   resources :home, only: :index
   resources :members, only: [:index, :edit, :update, :create, :new]
   resources :transactions, only: [:new, :create]
