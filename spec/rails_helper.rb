@@ -33,6 +33,7 @@ RSpec.configure do |config|
   config.include FeatureHelpers, type: :feature
   config.include AbstractController::Translation, type: :feature
   config.include ViewHelpers, type: :view
+  config.include ApiHelpers, type: :request
 
   config.before(:each, js: true) do
     # Since we (sometimes) use the same driver for both JS and non-JS tests

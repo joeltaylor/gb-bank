@@ -6,7 +6,7 @@ class ProcessTransactionService
   def initialize(transaction:, member:)
     @transaction = transaction
     @member      = member
-    @errors       = []
+    @errors      = []
   end
 
   def commit
