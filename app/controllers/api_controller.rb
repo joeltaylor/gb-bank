@@ -1,8 +1,6 @@
-class ApiController < ApplicationController
+class ApiController < ActionController::API 
+  include ActionController::HttpAuthentication::Token::ControllerMethods
   before_action :authenticate
-
-  protect_from_forgery with: :exception
-  rescue_from JSON::ParserError, with: :bad_request
 
   rescue_from ActiveRecord::RecordNotFound do |exception|
     json  = { errors: [exception.to_s] }.to_json
