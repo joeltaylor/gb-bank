@@ -19,8 +19,12 @@ module Api
         params.require(:transaction).permit([:amount, :description, :date])
       end
 
+      def member_params
+        params.require(:member).permit(:email)
+      end
+
       def member
-        Member.find_by!(email: params[:member][:email].downcase)
+        Member.find_by!(email: member_params[:email].downcase)
       end
     end
   end

@@ -6,6 +6,7 @@ class ApiController < ActionController::API
     json  = { errors: [exception.to_s] }.to_json
     render json: json, status: :not_found
   end
+  rescue_from ActionController::ParameterMissing, with: :bad_request
 
   private
 
@@ -22,8 +23,4 @@ class ApiController < ActionController::API
   def render_unauthorized
     render json: 'Bad credentials', status: 401
   end
-
-  # def append_view_paths
-  #   append_view_path "app/views/application"
-  # end
 end
