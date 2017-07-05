@@ -21,7 +21,7 @@ RSpec.describe "Api::V1::Members", type: :request do
         expect(response).to have_http_status(200)
         expect(json.length).to eq(3)
         expect(json.map {|m| m["name"] }).to eq(Member.all.map(&:name))
-        expect(json.first.keys).to eq(["email", "name", "balance"])
+        expect(json.first.keys).to eq(["id", "email", "name", "balance"])
       end
     end
   end
