@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe MemberSetupService do
   let(:member) { FactoryGirl.build(:member) }
-  subject(:create_member) { MemberSetupService.new(member: member, credit: 100.00).commit }
+  subject(:create_member) { MemberSetupService.new(member: member).commit }
 
   it "creates an account for the user" do
     create_member
@@ -22,11 +22,6 @@ RSpec.describe MemberSetupService do
   it "applies the promotional transaction to the member's account" do
     create_member
     expect(member.account.balance).to eq(100.00)
-  end
-
-  it "doesn't apply a credit if none given" do
-    MemberSetupService.new(member: member).commit
-    expect(member.account.balance).to eq(0.00)
   end
 
   it "rollsback in the event of an error" do

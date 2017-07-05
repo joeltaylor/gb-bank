@@ -25,7 +25,7 @@ class MembersController < ApplicationController
 
   def create
     member = Member.new(member_params)
-    service = ::MemberSetupService.new(member: member, credit: 100.00).commit
+    service = ::MemberSetupService.new(member: member).commit
 
     if service.errors.empty?
       redirect_to members_path, notice: t('member.create.success')
